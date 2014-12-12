@@ -176,11 +176,15 @@ class OscillationDown(Trajectory) :
             self.amplitude = 5
         else :
             self.amplitude = params['amplitude']
+        self.pos = None
             
     def rel_pos(self, pos, interval, time) :
         """falling line position (we compute an absolute position relative from this one"""
-        pos_rel = (pos[0], pos[1] + self.mobile.speed * interval + self.randomV)
-        return pos_rel
+        if self.pos == None :
+            self.pos = (pos[0], pos[1] + self.mobile.speed * interval + self.randomV)
+        else :
+            self.pos = (pos[0], pos[1] + self.mobile.speed * interval + self.randomV)
+        return self.pos
             
     def abs_pos(self, interval, time) :
         """sinusoidal oscillation"""
